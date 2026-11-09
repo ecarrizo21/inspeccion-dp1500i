@@ -1,8 +1,8 @@
-const cacheName = 'dp1500i-general-v1-' + self.registration.scope;
+const cacheName = 'dp1500i-completa-v2-' + self.registration.scope;
 self.addEventListener('install',event => {
   event.waitUntil(caches.open(cacheName).then(cache => cache.addAll([
-    './','./index.html','./draft.js','./manifest.webmanifest','./icon-192.png','./icon-512.png'
-  ])).then(() => self.skipWaiting()));
+    './','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png'
+  ].map(path => new Request(path,{cache:'reload'})))).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate',event => event.waitUntil(self.clients.claim()));
 self.addEventListener('fetch',event => {

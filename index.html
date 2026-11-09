@@ -1,14 +1,77 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#161616"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icon-192.png"><title>Inspección DP1500i</title><style>body{margin:0;background:#161616}small{color:#cfbea0}[data-head]{margin-top:12px}</style></head><body><div id="dp920"><style>
 #dp920{background:#161616;color:#eee;font:15px/1.45 system-ui;padding:18px;border-radius:12px;color-scheme:dark}#dp920 main{max-width:570px;margin:auto}#dp920 h2{font:600 20px system-ui;margin:0 0 14px}#dp920 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 12px}#dp920 label{display:block;color:#c7c5bf}#dp920 input,#dp920 select,#dp920 textarea{display:block;width:100%;min-width:0;box-sizing:border-box;background:#202020;color:#fafafa;border:1px solid #454545;border-radius:6px;padding:8px;font:inherit;min-height:44px}#dp920 details,#dp920 .system{background:#202020;border:1px solid #393939;margin:6px 0;border-radius:8px}#dp920 summary,#dp920 .system{padding:12px}#dp920 .system{color:#aaa}#dp920 summary{cursor:pointer}#dp920 fieldset{margin:12px;border:1px solid #454545;border-radius:6px}#dp920 fieldset label{margin-bottom:6px}#dp920 output{float:right;color:#ffbc44}#dp920 p{color:#c7c5bf}
-</style><main><h2>Inspección DP1500i</h2><small id="offline" role="status">Preparando uso sin conexión…</small> · <small id="saved" role="status">Borrador de prueba</small><div class="grid" data-head></div><p>Criticidad: 0 normal · 1 generar aviso · 2 intervenir equipo · 3 parar equipo</p><details><summary>1. GENERAL <output aria-live="polite"></output></summary><div data-items></div></details><div data-systems></div><label>Novedades<textarea></textarea></label></main></div>
-<script>
-(()=>{
-const root=document.getElementById('dp920');
-function field(parent,title,type,value){const label=document.createElement('label');label.textContent=title;const input=document.createElement(type==='select'?'select':'input');if(type==='select'){for(const n of ['','0','1','2','3'])input.add(new Option(n||'Pendiente',n));}else input.type=type;input.value=value;label.append(input);parent.append(label);return input;}
-for(const [name,type,value] of [['Fecha','date','2026-10-26'],['Equipo','number','920'],['Orden','number',''],['Fecha últ. insp.','date','2026-10-14'],['Hs. inicio','time','12:00'],['Hs. entrega','time','13:00'],['Hs. motor','number','5281'],['Hs. percusión','number','5367'],['Inspector','text',''],['Operador','text','']])field(root.querySelector('[data-head]'),name,type,value);
-const currents=[];
-for(const [i,name] of ['Novedades del operador','Estado de las insignias (Ley Minera, n° interno)','Sistema ANSUL/disparador/precinto/matafuego'].entries()){const item=document.createElement('fieldset'),title=document.createElement('legend');title.textContent=(i+1)+'. '+name;item.append(title);root.querySelector('[data-items]').append(item);const grid=document.createElement('div');grid.className='grid';item.append(grid);field(grid,'Ant.','select','0');const act=field(grid,'Act.','select','0');currents.push(act);act.onchange=()=>{const n=currents.filter(input=>Number(input.value)>0).length;root.querySelector('output').textContent=n?n+' con novedad':'';};field(item,'Descripción','text','');field(item,'Orden','text','');}
-for(const s of ['2. CABINA','3. MARTILLO','4. MESA DE AVANCE','5. CAMBIADOR DE BARRAS','6. BOOM','7. MOTOR','8. HIDRAULICOS DE PERFORACION','9. SISTEMA ELECTRICO','10. SISTEMA DE CONTROL','11. SISTEMA NEUMATICO','11. SISTEMA CAPTADOR DE POLVO','12. UNIDAD LUBRICACION MARTILLO','13. GRUPO DE TRANSFERENCIA','14. DEPOSITOS','15. OTROS','16. TREN RODANTE']){const row=document.createElement('div');row.className='system';row.textContent=s;root.querySelector('[data-systems]').append(row);}
+</style><main><h2>Inspección DP1500i</h2><div><small id="offline">Preparando uso sin conexión…</small> · <small id="saved" role="status">Borrador local</small></div><div class="grid" id="header"></div><p>RESPETAR TODAS LAS MEDIDAS DE SEGURIDAD. APLICAR LOS BLOQUEOS.</p><p>Criticidad: 0 normal · 1 generar aviso · 2 intervenir equipo · 3 parar equipo</p><div id="systems"></div><label>Novedades<textarea data-key="Cabecera/Novedades"></textarea></label></main></div><script id="catalog" type="application/json">[["1. GENERAL", [[1, "Novedades del operador"], [2, "Estado de las insignias (Ley Minera, n° interno)"], [3, "Sistema ANSUL/disparador/precinto/matafuego"]]], ["2. CABINA", [[1, "Estado cabina/tacos de goma/protectores"], [2, "Estado puerta/burlete/cerradura"], [3, "Estado butaca/cinturón de seguridad/anclajes"], [4, "Apoya brazo izquierdo/botones/testigos/anclajes"], [5, "Apoya brazo derecho/botones/testigos/anclajes"], [6, "Joystick del intercambiador/movimiento de la mesa"], [7, "Joystick del sistema de perforación/boom"], [8, "Estado paneles/teclas/testigos"], [9, "Estado pantalla/soporte/tim"], [10, "Escobillas/Zorrino/brazo limpiaparabrisas"], [11, "Calefacción A/A Filtros de cabina"], [12, "Luces internas/externas/soporte"], [13, "Calefacción/A/A/Filtros de cabina"], [14, "Parabrisas/luneta/Ventana/burletes"], [15, "Cámara externa/pantalla"], [16, "Tablero eléctrico/relay/llaves térmicas"], [17, "Radio comunicaciones/wenco"]]], ["3. MARTILLO", [[1, "Acumuladores de presión (estabilizador)"], [2, "Dispositivo de barrido/fuga/anclajes"], [3, "Carcasa de percusión/reductora/motor de rotación"], [4, "Cuna del martillo/bulones/teflones"], [5, "Mangueras del martillo/soporte mangueras"]]], ["4. MESA DE AVANCE", [[1, "Bracket/bulones/fisura"], [2, "Tensor de mangueras/bulones/fisura/rolos"], [3, "Cilindro de avance/guías/bodys/banco válvula"], [4, "Cables de avance/trabas/guías bronce/cadenas"], [5, "Grupo medidor de profundidad/correa/engranaje"], [6, "Guías de avance del martillo/mesa"], [7, "Puntera de mesa/guías de la campana/fisuras"], [8, "Grupo de mordazas pito 15/cilindro/mordaza/anclajes"], [9, "Estado descanso de la pluma/fisuras/anclajes"], [10, "Mordazas centralizadoras/cilindro/anclajes"], [11, "Estado mesa de avance/fisuras"], [12, "Mangueras/protectores"]]], ["5. CAMBIADOR DE BARRAS", [[1, "Cilindros pestillos/pernos/engrase"], [2, "Cilindros intercambiador barra/pernos/engrase/mordazas"], [3, "Cilindros brazo del tubo cuadrado/pernos/engrase"], [4, "Motor de rotación de casetera/disco varillas"], [5, "Tubo cuadrado/tilt inf./sup."], [6, "Box superior/inferior/bujes/fisuras"], [7, "Grupo de válvulas del RC/fugas/anclajes"], [8, "Mangueras/protectores"]]], ["6. BOOM", [[1, "Cilindro elevación boom/Cross/clevis/fisura/pernos/engrase"], [2, "Cilindro swing del boom/Cross/clevis/fisura/pernos/engrase"], [3, "Cilindro de extensión del boom/pernos/engrase/fisura"], [4, "Cilindro swing de la mesa (tilt)/pernos/engrase/fisuras"], [5, "Cilindro inclinación de la mesa/pernos/engrase/fisura"], [6, "Cilindro extensión de la mesa/pernos/engrase/fisura"], [7, "Telescópico/clevis/juego/engrase/pernos"], [8, "Cross y swing del avance/fisura/anclajes"], [9, "Bloque válvulas de boom/fugas/soporte"], [10, "Paquetes de mangueras/protectores"]]], ["7. MOTOR", [[1, "Estado de varilla/soporte/tapa de válvula/fisura/fugas"], [2, "Chequear cárter/canilla de drenaje/block"], [3, "Bomba de agua/manguera refrigerante/abrazaderas"], [4, "Correas alternador/A/A/paleta/protector"], [5, "Mangueras de admisión/porta filtro/filtro"], [6, "Sistema de combustible/vacuómetro"], [7, "Estado filtro/porta filtro/anclajes"], [8, "Estado de radiador de refrigerante/aftercooler/combustible/soporte/fuga"], [9, "Tacos de motor/bulones/anclajes/protector escape"]]], ["8. HIDRAULICOS DE PERFORACION", [[1, "Bombas rotación/percusión"], [2, "Bomba enfriador de aceite/colectora de polvo"], [4, "Bloque de perforación/válvulas/mangueras"], [6, "Chequeo del radiador de hidráulico/soporte/fisuras"], [7, "Estado del porta filtro de aceite hidráulico/soporte/anclajes"], [8, "Chequeo motor hidráulico/ventilador/anclajes"], [9, "Mangueras/protectores"]]], ["9. SISTEMA ELECTRICO", [[2, "Arranque/bulones/alarma arranque pegado"], [3, "Alarma de retroceso/anclajes"], [4, "Alternador/arranque/anclajes"], [5, "Máster Switch/Baterías/bornes"], [7, "Tablero principal ESG/MP"], [8, "Cableado general"]]], ["10. SISTEMA DE CONTROL", [[1, "SDP Sensor posición martillo perforador"], [2, "DM Componente control de perforación"], [3, "DC Controlador de perforación"], [4, "RHC Controlador manipulación de varillas"], [5, "HM HMI maestro"], [6, "SAU Unidad apunte del sensor"], [7, "RAR Reposabrazos derecho"], [8, "LAR Reposabrazos izquierdo"], [9, "SM Maestro del sistema"], [10, "PPC Controlador de la unidad de alimentación"], [11, "FCC Controlador portador delantero"], [12, "RCC Controlador portador trasero"], [13, "PPS Unidad de alimentación esclava"], [14, "ECM Módulo control de motor"], [15, "WIC Controlador de inyección de agua"], [16, "SCI Sensor inclinación del portador"], [17, "SBA Sensor de oscilación brazo"]]], ["11. SISTEMA NEUMATICO", [[1, "Compresor/sensor/fugas/bulones anclaje"], [2, "Tacho de aceite compresor/mirilla/nivel"], [3, "Porta filtro aceite/sensor de saturación/soporte"], [4, "Válvula de admisión del compresor/válvula del tacho"], [5, "Banco neumático/válvulas/manómetro/bulones"], [6, "Filtro de aire/porta filtro"], [7, "Radiador/soporte/ventilador/termostato"], [8, "Mangueras/protectores"]]], ["11. SISTEMA CAPTADOR DE POLVO", [[1, "Colectora de polvo/Clapeta/filtros/caños"], [2, "Motor hidráulico colectora/mangueras/válvulas"], [3, "Ciclón primario/cono/soporte/bulones"], [4, "Manguera de aspiración 1ria/2ria/abrazadera"], [5, "Gomas de cierre/copa succión/soporte"], [6, "Mangueras/protectores"]]], ["12. UNIDAD LUBRICACION MARTILLO", [[1, "Depósito de aceite nuevo/usado/nivel"], [2, "SLU/cableado/sensores"], [3, "Separador de agua/presostato"], [4, "Mangueras/protectores"]]], ["13. GRUPO DE TRANSFERENCIA", [[1, "Caja de transferencia/nivel/varilla/respiradero/bulones"]]], ["14. DEPOSITOS", [[1, "Depósito de hidráulico/bulones/nivel/golpes/respiradero"], [2, "Depósito de combustible/bulones/golpes/nivel/respiradero"]]], ["15. OTROS", [[1, "Portones/amortiguadores"], [2, "Estado acople carga y descarga rápida"], [3, "Sistema de inyección de agua"], [4, "Sistema de engrase automático/barras"], [5, "Estado de bomba manual/acoples rápidos"], [6, "Grupo gato hidráulico trasero/manguera/protectores"]]], ["16. TREN RODANTE", [[1, "Cilindro de oscilación/pernos/engrase"], [2, "Banco oscilación/soporte/mangueras"], [3, "Banco traslación/soporte/mangueras"], [4, "Mandos finales/motor hidráulico/fuga/bulones"], [5, "Bastidor derecho/izquierdo/fisuras"], [6, "Rueda cavilla/trineo/rueda guía/izquierdo/derecho"], [7, "Cadena/rolos/zapatas/izquierda/derecha/fisuras"]]]]</script>
+<style>
+#dp920 button{margin:6px 0 0;background:#282828;color:#eee;border:1px solid #555;padding:10px;border-radius:6px;font:inherit}#dp920 summary{display:flex;align-items:center;justify-content:space-between;gap:8px}#dp920 output{flex-shrink:0}#dp920 fieldset{min-width:0}#dp920 .work+.work{border-top:1px solid #555;padding-top:12px}#dp920 summary:before{content:'▸'}#dp920 details[open]>summary:before{content:'▾'}#dp920 summary span{flex:1}
+</style><script>
+const catalog=JSON.parse(document.getElementById('catalog').textContent);
+const base=location.pathname.replace(/index\.html$/,'');
+const storageKey='dp1500i-completa-v2:'+base;
+const saved=document.getElementById('saved');
+let draft={};
+let legacy={};
+try {
+  draft=JSON.parse(localStorage.getItem(storageKey)||'{}');
+  if(!Object.keys(draft).length) legacy=JSON.parse(localStorage.getItem('inspeccion-general-v1:'+base)||'{}');
+  if(Object.keys(draft).length||Object.keys(legacy).length) saved.textContent='Borrador recuperado';
+} catch {saved.textContent='No se pudo leer el borrador';}
+function persist(){
+  try {localStorage.setItem(storageKey,JSON.stringify(draft));saved.textContent='Guardado en este dispositivo';}
+  catch {saved.textContent='Error al guardar en este dispositivo';}
+}
+function element(tag,parent,text){
+ const node=document.createElement(tag);parent.append(node);
+ if(text!==undefined) node.textContent=text;return node;
+}
+function field(parent,title,type,key,priorKey){
+ const label=element('label',parent,title);
+ const control=element(type==='select'?'select':'input',label);
+ if(type==='select'){
+  for(const [v,t] of [['','Pendiente'],['0','0 · Normal'],['1','1 · Generar aviso'],['2','2 · Intervenir equipo'],['3','3 · Parar equipo']]) control.add(new Option(t,v));
+ }else control.type=type;
+ control.dataset.key=key;
+ control.value=draft[key]??legacy[priorKey]??'';
+ if(control.value!=='') draft[key]=control.value;
+ return control;
+}
+for(const [title,type] of [['Fecha','date'],['Equipo','number'],['Orden','number'],['Fecha últ. insp.','date'],['Hs. inicio','time'],['Hs. entrega','time'],['Hs. motor','number'],['Hs. percusión','number'],['Inspector','text'],['Operador','text']]){
+ const key='Cabecera/'+title;field(document.getElementById('header'),title,type,key,key);
+}
+const note=document.querySelector('textarea');note.value=draft[note.dataset.key]??legacy[note.dataset.key]??'';draft[note.dataset.key]=note.value;
+function recount(section){
+ const count=[...section.querySelectorAll('fieldset')].filter(item=>[...item.querySelectorAll('[data-current]')].some(c=>Number(c.value)>0)).length;
+ section.querySelector('output').textContent=count?count+' con novedad':'';
+}
+for(const [section,items] of catalog){
+ const details=element('details',document.getElementById('systems'));
+ const summary=element('summary',details);element('span',summary,section);element('output',summary).setAttribute('aria-live','polite');
+ for(const [num,name] of items){
+  const box=element('fieldset',details);const title=num+'. '+name; element('legend',box,title);
+  const works=element('div',box);const key=section+'/'+num;
+  function addWork(i){
+   const work=element('div',works);work.className='work';const grid=element('div',work);grid.className='grid';
+   for(const [label,type] of [['Ant.','select'],['Act.','select'],['Descripción','text'],['Orden','text']]){
+    const oldKey=section==='1. GENERAL'&&i===0?title+'/'+label:null;
+    const input=field(type==='select'?grid:work,label,type,key+'/'+i+'/'+label,oldKey);
+    if(label==='Act.')input.dataset.current='true';
+   }
+  }
+  const rows=Number(draft[key+'/rows'])||1;for(let i=0;i<rows;i++)addWork(i);
+  const button=element('button',box,'+ Otro trabajo');button.type='button';
+  button.onclick=()=>{const i=works.children.length;addWork(i);draft[key+'/rows']=i+1;persist();};
+ }
+ recount(details);
+}
+function onEdit(event){
+ const control=event.target;if(!control.dataset.key)return;
+ draft[control.dataset.key]=control.value;
+ if(control.dataset.current)recount(control.closest('details'));
+ persist();
+}
+document.addEventListener('input',onEdit);document.addEventListener('change',onEdit);
+(async()=>{
+ const status=document.getElementById('offline');
+ try{await navigator.serviceWorker.register('./sw.js');await navigator.serviceWorker.ready;status.textContent='Lista para usar sin conexión';}
+ catch {status.textContent='Uso sin conexión pendiente';}
 })();
-</script>
-<script src="./draft.js"></script></body></html>
+</script></body></html>
